@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct ContentView: View {
     
     @State private var showAlert = false
@@ -22,10 +23,18 @@ struct ContentView: View {
     @State private var scoreTitle = ""
     @State private var showingScore = false
     
+    @ViewBuilder var flagImage: some View {
+        ForEach(0..<3) { number in
+            Button {
+                flagTapped(number)
+            } label: {
+                Image( flags[number] )
+            }
+        }
+    }
     
     var body: some View {
         
-            
             ZStack {
                 LinearGradient(colors: [.blue, .black], startPoint: .top, endPoint: .bottom ).ignoresSafeArea()
                 
@@ -38,13 +47,7 @@ struct ContentView: View {
                         
                         Text(flags[correctAnswer]).foregroundStyle(.white).font(.largeTitle.weight(.semibold))
                         
-                        ForEach(0..<3) { number in
-                            Button {
-                                flagTapped(number)
-                            } label: {
-                                Image( flags[number] ).clipShape(.capsule).shadow(radius: 5)
-                            }
-                        }
+                        flagImage.clipShape(.capsule).shadow(radius: 5)
                     }
                     Spacer()
                 }
